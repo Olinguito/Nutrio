@@ -7,6 +7,9 @@ router.route('/:id')
     .delete(child.destroy)
     .post(child.addMeasure)#Agrega una medida al historial
 
+router.route('/:id/vaccinate')
+    .put(child.vaccinate)
+
 router.route('/')
     .get(child.list)
     .post(child.create)
