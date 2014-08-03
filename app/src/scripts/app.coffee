@@ -12,13 +12,14 @@ angular.module('app', [
     .when '/login',
         name: 'login'
         templateUrl: 'views/login.html'
-    .when '/register',
-        name: 'register'
-        templateUrl: 'views/register.html'
     .when '/child/:id',
         name: 'child'
         templateUrl: 'views/child.html'
         controller: 'ChildCtrl'
+    .when '/register',
+      name: 'register'
+      templateUrl: 'views/register.html'
+      controller: 'RegisterCtrl'
     .when '/child/new',
         name: 'child-new'
         templateUrl: 'views/child-new.html'
@@ -30,3 +31,4 @@ angular.module('app', [
     $rootScope.inHome = -> $location.path() isnt '/'
     $rootScope.btnVisible = yes
     $rootScope.loading = no
+    $rootScope.controles = nom: ->

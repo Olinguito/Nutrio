@@ -9,6 +9,9 @@ router.route('/:id')
 
 router.route('/')
     .get(tutor.list)
-    .post(tutor.create)
+    .post(
+      (req, res) ->
+        res.header 'Access-Control-Allow-Origin', '*'
+        tutor.create(req,res))
 
 module.exports = router
