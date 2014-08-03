@@ -1,8 +1,8 @@
 config =
     test:
-        db: 'mongodb://localhost/coolorder#test'
+        db: 'mongodb://localhost/undostres#test'
     development:
-        db: 'mongodb://localhost/coolorder#dev'
+        db: 'mongodb://localhost/undostres#dev'
     production:
         db: ''
 

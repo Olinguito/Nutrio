@@ -7,3 +7,4 @@ ContactSchema = new mgs.Schema
     relationship: String
 
 module.exports = mgs.model 'Contact', ContactSchema
+module.exports.contactSchema=ContactSchema

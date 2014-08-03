@@ -24,6 +24,20 @@ describe 'Tutors', ->
           res.body.should.be.an 'array'
           do done
 
+
+  describe 'POST /tutors', ->
+    it 'create new tutor', (done)->
+      newTutor={id: 6, name: 'Maria', email: 'maddrie@e.com', phone: 2342344}
+      request.post '/tutors'
+      .send newTutor
+      .type 'json'
+      .expect 200
+      .end (err, res) ->
+        done err if err
+        console.log(res)
+        res.body.name.should.equal newTutor.name
+        do done
+
   describe 'POST /children', ->
     it 'should create a child', (done) ->
       console.log('posting a child')
@@ -37,6 +51,34 @@ describe 'Tutors', ->
         done err if err
         console.log(res)
         res.body.name.should.equal newChild.name
+        do done
+
+
+        #add new child to the tutor
+  describe 'POST /tutors/:id', ->
+    it.only 'should create a child to the tutor', (done) ->
+
+      newTutor={id: 1, name: 'Maria', email: 'marie@e.com', phone: 2342344}
+      request.post '/tutors'
+        .send newTutor
+        .type 'json'
+        .expect 200
+        .end (err, res) ->
+          done err if err
+          console.log(res)
+          res.body.name.should.equal newTutor.name
+          do done
+
+      newChild={id: 341, name: 'andresito', birthday: '10/12/1995', weight: 40, size: 140}
+
+      request.post '/tutors/1'
+      .send newChild
+      .type 'json'
+      .expect 200
+      .end (err, res) ->
+        done err if err
+        console.log(res)
+        #res.body.name.should.equal newChild.name
         do done
 
   describe 'GET /children/:id', ->

@@ -7,3 +7,4 @@ VaccineSchema = new mgs.Schema
 
 
 module.exports= mgs.model 'Vaccine', VaccineSchema
+module.exports.vaccineSchema=VaccineSchema

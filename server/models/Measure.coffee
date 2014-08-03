@@ -6,3 +6,4 @@ MeasureSchema = new mgs.Schema
     size: Number
 
 module.exports = mgs.model 'Measure', MeasureSchema
+module.exports.measureSchema=MeasureSchema

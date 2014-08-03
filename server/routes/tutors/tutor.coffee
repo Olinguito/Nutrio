@@ -1,4 +1,5 @@
 tutorModel=require '../../models/Tutor'
+childModel=require '../../models/Child'
 #Child=mongoose.model('Child')
 
 exports.list = (req, res) ->
@@ -35,3 +36,22 @@ exports.update = (req, res) ->
 
 exports.destroy = (req, res) ->
   res.json()
+
+exports.addChild =(req,res) ->
+  newChild=new childModel(req.body)
+  #TODO Plan de vacunación
+  tutorModel.findOne  id:req.params.id, (err,tut) ->
+    if err?
+      res.send(500, { error: err })
+    else if tut?
+      console.log("nuevo ahijado...")
+      console.log(newChild)
+      tut.children.push newChild
+      console.log(tut)
+      tut.save (err) ->
+        if err?
+          res.send(500)
+        else
+          res.send(tut)
+    else
+      res.send(404)
