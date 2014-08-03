@@ -2,6 +2,7 @@
   width 50%
   position relative
   display inline-block
+  margin-bottom 2rem
   .head
     background #ffdfa5
     box-shadow 0 0 4px fade-out(black,80%)
@@ -54,6 +55,8 @@
     z-index -1
     absolute bottom 0
     left 41%
+    &:nth-child(4)
+      left 54%
     &:after
       content ''
       display block
@@ -64,6 +67,10 @@
       background #ffdfa5
       border-radius 100px
       box-shadow 0 0 3px fade-out(black,80%)
-    &:last-of-type
-      left 54%
 
+  .caption
+    absolute bottom -2rem
+    width 100%
+    text-align center
+    text-transform capitalize
+    font-weight bold

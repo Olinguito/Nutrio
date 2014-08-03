@@ -12,12 +12,14 @@ angular.module('app')
         </div>
         <div class='leg'></div>
         <div class='leg'></div>
+        <div class='caption' ng-transclude></div>
         """
+    transclude: yes
     restrict: 'C'
     scope:
         h: '=height'
         w: '=weight'
-    link: (scope, element, attrs) ->
+    link: (scope, element) ->
         domEle = element[0]
         element.css height: "#{domEle.offsetWidth * 1.5}px"
         cont =
@@ -25,6 +27,8 @@ angular.module('app')
             w: domEle.offsetWidth
         element.children().css position: 'absolute'
         update = ->
+            scope.h = scope.h
+            scope.w = scope.w
             # Head
             head = angular.element domEle.getElementsByClassName('head')[0]
             head.css

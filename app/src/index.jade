@@ -30,4 +30,6 @@ html(ng-app="app")
       section.content(ng-view)
 
       footer
+        button.left(ng-click="lBtnClick")
+        button.right(ng-click="rBtnClick")
       button#cool(ng-if="btnVisible",ng-click='continueAction') {{continue || 'Ok'}}
