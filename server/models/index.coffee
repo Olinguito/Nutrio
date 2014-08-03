@@ -6,8 +6,9 @@ fs = require 'fs'
 path = require 'path'
 
 # require all .js and .coffee files in the current directory excluding this file
-fs.readdirSync __dirname
-.map (file) ->
+dir = fs.readdirSync __dirname
+console.log dir
+dir.map (file) ->
     path.join __dirname, file
 .filter (file) ->
     fs.statSync(file).isFile() and file isnt __filename and (path.extname(file) is '.js' or path.extname(file) is '.coffee')

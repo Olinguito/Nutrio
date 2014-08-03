@@ -1,9 +1,23 @@
 module.exports = (grunt) ->
-  pkg = grunt.file.readJSON 'package.json'
+    pkg = grunt.file.readJSON 'package.json'
 
-  grunt.initConfig
+    grunt.initConfig
 #    pkg: pkg
-#    mocha:
+        express:
+            dev:
+                options:
+                    server: 'server/server.coffee'
+                    port: 3000
+                    serverreload: yes
+        mochaTest:
+            test:
+                options:
+                    reporter: 'spec'
+                    require: 'coffee-script/register'
+                src: ['test/api/**/*.coffee']
 
-  grunt.registerTask 'test', ['mocha']
-  grunt.registerTask 'default', ['express:dev']
+    grunt.loadNpmTasks 'grunt-express'
+    grunt.loadNpmTasks 'grunt-mocha-test'
+
+    grunt.registerTask 'test', ['mochaTest']
+    grunt.registerTask 'default', ['express:dev']

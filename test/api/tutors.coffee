@@ -8,16 +8,19 @@ app = require '../../server/server'
 request = require('supertest')(app)
 mongoose = require '../../server/db'
 
-describe 'some end-point test', ->
+describe 'Tutors', ->
 
   before ->
     # clean DB before testing
     mongoose.connection.db.dropDatabase()
 
-  describe 'POST /some-endpoint', ->
-    data = name: 'fuu', email: 'bar@baz'
+  describe 'POST /tutors', ->
+    tutor =
+        name: 'Juan'
+        email: 'juan@email.com'
+
     it 'should create a new resource and return it', (done) ->
-      request.post '/some-endpoint'
+      request.post '/tutors'
       .send data
       .type 'json'
       .expect 200
@@ -32,7 +35,7 @@ describe 'some end-point test', ->
       .type 'json'
       .expect 409, done
 
-  describe 'GET /some-endpoint(/:id)', ->
+  describe 'GET /tutors(/:id)', ->
     it 'should get a list of resources', (done) ->
       request.get '/some-endpoint'
       .type 'json'

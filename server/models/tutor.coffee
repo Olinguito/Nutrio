@@ -1,10 +1,7 @@
-###
-  Sample mongoose model
-###
-
 mgs = require 'mongoose'
 
-UserSchema = new mgs.Schema
+TutorSchema = new mgs.Schema
+    id: Number
     name: String
     email:
         type: String, unique: yes
@@ -12,4 +9,4 @@ UserSchema = new mgs.Schema
     # image: String
     # role: String
 
-module.exports = mgs.model 'User', UserSchema
+module.exports = mgs.model 'Tutor', TutorSchema

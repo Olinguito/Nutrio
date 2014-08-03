@@ -1,6 +1,7 @@
 ###
   Server
 ###
+
 app = do require 'express'
 # connect to the database and load models
 db = require './db'
