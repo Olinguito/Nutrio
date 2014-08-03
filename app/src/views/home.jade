@@ -1,8 +1,10 @@
 .children
     .kid(ng-repeat="c in children")
     .kid(height="1",weight="1")
-    .kid(height="0.7",weight="0.5")
+    .kid(height="fuu",weight="faa")
     a.add(href="#/child/new") +
+input(type="range", step="0.05",min="0.5",max="1", ng-model="fuu", ng-init="fuu=0.5")
+input(type="range", step="0.05",min="0.5",max="1", ng-model="faa", ng-init="faa=0.5")
 ul.alerts
     li(ng-repeat="a in alerts") {{ a.name }}
 p(ng-hide="alerts") No tienes notificaciones nuevas
