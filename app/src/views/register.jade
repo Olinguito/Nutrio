@@ -1,0 +1,27 @@
+form
+    fieldset
+        label Nombre
+            input(type="text", placeholder="Nombre")
+        label Apellidos
+            input(type="text", placeholder="Apellidos")
+        label Fecha de Nacimiento
+            input(type="date", placeholder="DD/MM/AAAA")
+        label Genero
+            input(type="radio", name="gender", value="male")
+            input(type="radio", name="gender", value="female")
+    fieldset
+        label Departamento
+            select(): option() Ningun Departamento
+        label Municipio
+            select(): option() Ningun Municipio
+        label Zona, Vereda, Barrio
+            input(type="text", placeholder="")
+        label Rol
+            select(): option() Selecciona un Rol
+    fieldset
+        label E-Mail
+            input(type="email", placeholder="ejemplo@algo.com")
+        label Contraseña
+            input(type="password")
+        label Confirmar Contraseña
+            input(type="password")

@@ -1,0 +1,45 @@
+.kid
+  width 50%
+  position relative
+  display inline-block
+  .head
+    background #ffdfa5
+    box-shadow 0 0 4px fade-out(black,80%)
+    &:after
+      content ''
+      position absolute
+      background #ffdfa5
+      display block
+      height 50%
+      width 20%
+      top 100%
+      left 40%
+      z-index -1
+    .eye
+      height 12%
+      width 12%
+      border-radius 5px
+      position absolute
+      top 45%
+      background black
+      &:first-of-type
+        left 34%
+      &:last-of-type
+        left 58%
+
+  .body
+    background #4fa346
+    box-shadow 0 0 4px fade-out(black,80%)
+
+  .leg
+    background #425aa3
+    width 5%
+    height 30%
+    z-index -1
+    absolute bottom 0
+
+    &:first-of-type
+      left 46%
+    &:last-of-type
+      left 54%
+
