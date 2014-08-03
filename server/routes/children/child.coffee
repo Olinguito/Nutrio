@@ -39,14 +39,12 @@ exports.destroy = (req, res) ->
     res.json()
 
 exports.addMeasure =(req,res) ->
-  console.log("medidaInfo:")
   console.log(req)
   newMeasure=new measureModel(req.body)
   childModel.findOne  id:req.params.id, (err,child) ->
     if err?
       res.send(500, { error: err })
     else if child?
-      console.log("nueva medida...")
       console.log(newMeasure)
       child.measuresHistory.push newMeasure
       console.log(child)
