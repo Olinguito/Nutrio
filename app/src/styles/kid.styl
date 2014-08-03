@@ -10,7 +10,7 @@
       position absolute
       background #ffdfa5
       display block
-      height 50%
+      height 30%
       width 20%
       top 100%
       left 40%
@@ -30,16 +30,40 @@
   .body
     background #4fa346
     box-shadow 0 0 4px fade-out(black,80%)
+    .arm
+      width 15%
+      height 80%
+      background #ffdfa5
+      position absolute
+      top 7%
+      border-radius 100px
+      z-index -1
+      &:first-of-type
+        left 0
+        transform rotate(15deg)
+        transform-origin top left
+      &:last-of-type
+        right 0
+        transform rotate(-15deg)
+        transform-origin top right
 
   .leg
     background #425aa3
     width 5%
-    height 30%
+    height 25%
     z-index -1
     absolute bottom 0
-
-    &:first-of-type
-      left 46%
+    left 41%
+    &:after
+      content ''
+      display block
+      absolute bottom 0
+      width 200%
+      left -50%
+      height 15%
+      background #ffdfa5
+      border-radius 100px
+      box-shadow 0 0 3px fade-out(black,80%)
     &:last-of-type
       left 54%
 
