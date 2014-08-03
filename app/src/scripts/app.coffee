@@ -9,6 +9,7 @@ angular.module('app', [
     $routeProvider.when '/',
         name: 'home'
         templateUrl: 'views/home.html'
+        controller: 'HomeCtrl'
     .when '/login',
         name: 'login'
         templateUrl: 'views/login.html'

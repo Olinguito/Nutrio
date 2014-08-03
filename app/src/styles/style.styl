@@ -37,5 +37,74 @@ footer
   width 100%
   absolute bottom 0 left 0
   box-shadow 0 0 5px fade-out(black,70%)
+  white-space nowrap
+  button
+    height 100%
+    width 50%
+    background none
+    display inline-block
+    margin 0
 
-/*#home*/
+
+#home
+  padding 0 10vw
+  nav
+    white-space nowrap
+    position relative
+    width 100%
+    height 2.5rem
+    line-height 2.5rem
+    margin .3rem auto
+    .switch
+      display inline-block
+      background cmain
+      border-radius 10px
+      height 1.2rem
+      width 2.2rem
+      absolute left 0 top .4rem
+      &:before, &:after
+        content ''
+        display inline-block
+        width 1.2rem
+        height 1.2rem
+      button
+        margin 0
+        border-radius 1.2rem
+        height 1.2rem
+        width 1.2rem
+        display inline-block
+        vertical-align top
+    >button
+      display inline-block
+      height 1.5rem
+      width 1.5rem
+      overflow hidden
+      text-indent 9999
+      margin 0
+      absolute right 0 top .4rem
+      background cmain
+    input[type=search]
+      absolute left 3rem
+      right 3rem
+      width 70%
+      display block
+      background fade-out(white, 10%)
+      border none
+      box-shadow 0 0 5px fade-out(black, 80%) inset
+      border-radius 5px
+      padding .4rem 1rem
+
+
+  .alerts
+    absolute bottom 0 left 10%
+    width 80%
+    max-height calc(100% - 4rem)
+    min-height 50%
+    background fade-out(cred,5%)
+    border-radius 10px 10px 0 0
+    padding 30px 20px
+    color white
+    box-shadow 0 -3px 5px fade-out(black, 70%)
+
+
+

@@ -1,10 +1,11 @@
+nav
+  .switch(): button
+  input(type="search", placeholder="Busca un niño ...", ng-model="q.name")
+  button Settings
 .children
-    .kid(ng-repeat="c in children")
-    .kid(height="1",weight="1")
-    .kid(height="fuu",weight="faa")
-    a.add(href="#/child/new") +
-input(type="range", step="0.05",min="0.5",max="1", ng-model="fuu", ng-init="fuu=0.5")
-input(type="range", step="0.05",min="0.5",max="1", ng-model="faa", ng-init="faa=0.5")
-ul.alerts
+    .kid(height="c.height",weight="c.weight",ng-repeat="c in children | filter:q.name")
+      | {{c.name}}
+    //a.add(href="#/child/new") +
+ul.alerts(ng-hide="showAlerts")
     li(ng-repeat="a in alerts") {{ a.name }}
-p(ng-hide="alerts") No tienes notificaciones nuevas
+    p(ng-hide="alerts") No tienes notificaciones nuevas
