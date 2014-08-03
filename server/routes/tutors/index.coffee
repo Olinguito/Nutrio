@@ -1,13 +1,13 @@
 router = require('express').Router()
-child = require './child'
+child = require './tutor'
 
 router.route('/:id')
-    .get(child.retrieve)
-    .put(child.update)
-    .delete(child.destroy)
+    .get(tutor.retrieve)
+    .put(tutor.update)
+    .delete(tutor.destroy)
 
 router.route('/')
-    .get(child.list)
-    .post(child.create)
+    .get(tutor.list)
+    .post(tutor.create)
 
 module.exports = router

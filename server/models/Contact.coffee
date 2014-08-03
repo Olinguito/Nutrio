@@ -2,7 +2,7 @@ mgs = require 'mongoose'
 
 ContactSchema = new mgs.Schema
     name: String
-    phone: number
+    phone: Number
     address: String
     relationship: String
 
