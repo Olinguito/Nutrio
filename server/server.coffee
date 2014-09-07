@@ -2,24 +2,38 @@
   Server
 ###
 app = do require 'express'
+
+#libs
+libs = require './lib'
+bodyParser = require 'body-parser'
+
 # connect to the database and load models
 db = require './db'
+
+
+
+
+
+
 # middlewares
-app.use do require 'body-parser'
 
+app.use bodyParser.json()
+app.use bodyParser.urlencoded({extended: true})
 
-allowCrossDomain = (req, res, next) ->
+app.use (req, res, next) ->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Methods', 'GET'
   res.header 'Access-Control-Allow-Headers', 'Content-Type'
   next()
-app.use allowCrossDomain
+
+app.use libs.Pagination
+
+
+
 
 app.use require './routes'
-app.use((req, res)->
-  res.headers['Access-Control-Allow-Origin']='*'
-)
-
+app.use libs.MoongoseHttpError
+app.use libs.ApiHandlerError.status404
 
 if app.get('env') is 'development'
     app.use do require 'errorhandler'

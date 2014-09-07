@@ -1,10 +1,17 @@
 router = require('express').Router()
+childrenR = require '../children'
 tutor = require './tutor'
+
+router.param('id', (req, res, next, id) ->
+  req.params.id = id
+  next();
+)
+
+router.use('/:id/children',childrenR)
 
 router.route('/:id')
     .get(tutor.retrieve)
     .put(tutor.update)
-    .delete(tutor.destroy)
     .post(tutor.addChild)#Agrega el niño al cuidado
 
 router.route('/')

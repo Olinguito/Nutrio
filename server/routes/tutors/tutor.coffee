@@ -1,131 +1,91 @@
-tutorModel=require '../../models/Tutor'
-childModel=require '../../models/Child'
-vaccuneModel=require '../../models/Vaccine'
+models = require '../../models'
+libs = require '../../lib'
 #Child=mongoose.model('Child')
+apiSchema = libs.ApiSchemaJson
+Tutor = models.Tutor
+Child = models.Child
 
-exports.list = (req, res) ->
-  tutorModel.find (err, tut) ->
-    res.json tut
+exports.list = (req, res, next) ->
 
-exports.retrieve = (req, res) ->
-  tutorModel.findOne  id:req.params.id, (err,tut) ->
-    res.send(500, { error: err }) if err?
-    if tut?
-      res.send(tut)
-    else
-      res.send(404)
+  Tutor.paginate({}, req.page, req.rows, (err, totalPages, users, usersSize)->
+
+    return (req.mgsError= err; next()) if err?
+
+    res.status 200
+    res.json apiSchema.multiple(users, usersSize, totalPages, req.page)
+
+  )
+
+exports.retrieve = (req, res, next) ->
+  Tutor
+  .findOne({ _id: req.params.id})
+  .populate('children')
+  .exec( (err, user) ->
+
+    return (req.mgsError= err; next()) if err?
+    return (req.notFound = "Tutor"; next()) unless user
+
+    res.status 200
+    res.json apiSchema.one(user)
+
+  )
 
 
-exports.create = (req, res) ->
-  res.header 'Access-Control-Allow-Origin', '*'
-  res.header 'Access-Control-Allow-Credentials', true
-  res.header 'Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS'
-  res.header 'Access-Control-Allow-Headers', 'Content-Type'
 
-  fields=req.body
-  ch=new tutorModel(fields)
-  ch.save (err, tut) ->
-    res.send(500, { error: err }) if err?
-    res.send(tut)
+exports.create = (req, res, next) ->
 
-exports.update = (req, res) ->
-  tutorModel.findOne  id:req.params.id, (err,tut) ->
-    if err?
-      res.send(500, { error: err })
-    else if tut?
-      tutorModel.findByIdAndUpdate tut._id, { $set: req.body }, (err, resource) ->
-        if err?
-          res.send(500, { error: err })
-        else res.send(resource)
-    else
-      res.send(404)
+  tutor = new Tutor(req.body)
+  tutor.password = req.body.password
+  tutor.save((err)->
+    return (req.mgsError= err; next()) if err?
+    res.status 200
+    res.json apiSchema.one(tutor)
+  )
 
-exports.destroy = (req, res) ->
-  res.json()
 
-exports.addChild =(req,res) ->
-  newChild=new childModel(req.body)
+exports.update = (req, res, next) ->
+  Tutor.updateOne({ _id: req.params.id}, req.body ,(err, tutor) ->
 
-  vac=new vaccuneModel({name: 'Tuberculosis',age: 1, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Hepatitis B',age: 1, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Polio primera',age: 60, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Pentavalente primera',age: 60, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Influenzae Tipo b y Difteria - Tosferina-Tetáno (DPT) primera',age: 60, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Rotavirus primera',age: 60, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Neumococo primera',age: 60, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Polio segunda',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Pentavalente segunda',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Influenzae Tipo b y Difteria - Tosferina-Tetáno (DPT) segunda',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Rotavirus segunda',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Neumococo segunda',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Polio tercera',age: 180, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Pentavalente tercera',age: 180, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Influenzae Tipo b y Difteria - Tosferina-Tetáno (DPT) tercera',age: 180, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Influenza primera',age: 120, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
+    return (req.mgsError= err; next()) if err?
+    return (req.notFound = "Tutor"; next()) unless tutor
 
-  vac=new vaccuneModel({name: 'Influenza segunda',age: 180, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
+    res.status 200
+    res.json apiSchema.one(tutor)
+  )
 
-  vac=new vaccuneModel({name: 'Sarampión Rubéola Paperas (SRP)',age: 365, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Fiebre Amarilla',age: 365, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Neumococo refuerzo',age: 365, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Influenza anual',age: 365, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Hepatitis A',age: 365, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
+exports.destroy = (req, res, next) ->
+  Tutor.removeOne({_id: req.params.id}, (err, tutor)->
+    return (req.mgsError= err; next()) if err?
+    return (req.notFound = "Tutor"; next()) unless tutor
 
-  vac=new vaccuneModel({name: 'Difteria - Tosferina Tétano (DPT) refuerzo 1',age: 540, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Polio refuerzo 1',age: 540, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
+    res.status 200
+    res.json apiSchema.one(Tutor)
+  )
 
-  vac=new vaccuneModel({name: 'Polio refuerzo 2',age: 1825, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Difteria - Tosferina Tétano (DPT) refuerzo 2',age: 1825, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
-  vac=new vaccuneModel({name: 'Sarampión Rubéola Paperas (SRP) refuerzo',age: 1825, applied: false})#age in days
-  newChild.vaccinesHistory.push vac
+exports.addChild =(req, res, next) ->
+  Tutor.findOne({_id: req.params.id}, (err, tutor)->
+    return (req.mgsError= err; next()) if err?
+    return (req.notFound = "Tutor"; next()) unless tutor
 
-  if newChild.sex.equal 'Female'
-    vac=new vaccuneModel({name: 'VPH',age: 3285, applied: false})#age in days
-    newChild.vaccinesHistory.push vac
-    vac=new vaccuneModel({name: 'VPH',age: 3465, applied: false})#age in days
-    newChild.vaccinesHistory.push vac
-    vac=new vaccuneModel({name: 'VPH',age: 5110, applied: false})#age in days
-    newChild.vaccinesHistory.push vac
+    child = new Child(req.body)
+    child.vaccine()
+    .then((n)->
+      child.save((err)->
+        return (req.mgsError= err; next()) if err?
 
-  tutorModel.findOne  id:req.params.id, (err,tut) ->
-    if err?
-      res.send(500, { error: err })
-    else if tut?
+        tutor.children.push(child._id)
+        tutor.save((err)->
+          return (req.mgsError= err; next()) if err?
 
-      console.log("nuevo ahijado...")
-      console.log(newChild)
-      tut.children.push newChild
-      console.log(tut)
-      tut.save (err) ->
-        if err?
-          res.send(500)
-        else
-          res.send(tut)
-    else
-      res.send(404)
+          res.status 200
+          res.json apiSchema.one(child)
+        )
+      )
+    )
+    .fail((err)->
+      return (req.mgsError= err; next()) if err?
+    )
+
+  )
+
+

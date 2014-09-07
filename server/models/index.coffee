@@ -7,7 +7,7 @@ path = require 'path'
 
 # require all .js and .coffee files in the current directory excluding this file
 dir = fs.readdirSync __dirname
-console.log dir
+
 dir.map (file) ->
     path.join __dirname, file
 .filter (file) ->
